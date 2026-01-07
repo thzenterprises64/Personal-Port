@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sierra Age Calculator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1f2933, #111827);
+      color: #ffffff;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      font-size: 2rem;
+      letter-spacing: 1px;
+    }
+
+    /* Middle bar */
+    .age-bar {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 25px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .age-bar input {
+      padding: 12px;
+      width: 120px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    .age-bar button {
+      padding: 12px 20px;
+      border-radius: 8px;
+      border: none;
+      background: #2563eb;
+      color: #ffffff;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .age-bar button:hover {
+      background: #1d4ed8;
+    }
+
+    .result {
+      margin-top: 25px;
+      font-size: 1.2rem;
+      min-height: 1.5em;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Sierra Age Calculator</h1>
+
+    <div class="age-bar">
+      <input type="number" id="day" placeholder="Day" min="1" max="31" />
+      <input type="number" id="month" placeholder="Month" min="1" max="12" />
+      <input type="number" id="year" placeholder="Year" min="1900" />
+      <button onclick="calculateAge()">Calculate Age</button>
+    </div>
+
+    <div class="result" id="result"></div>
+
+    <footer>
+      © 2026 Sierra Age Calculator
+    </footer>
+  </div>
+
+  <script>
+    function calculateAge() {
+      const day = parseInt(document.getElementById('day').value);
+      const month = parseInt(document.getElementById('month').value) - 1; // JS months are 0-based
+      const year = parseInt(document.getElementById('year').value);
+      const result = document.getElementById('result');
+
+      if (isNaN(day) || isNaN(month) || isNaN(year)) {
+        result.textContent = 'Please enter a valid date of birth.';
+        return;
+      }
+
+      const birthDate = new Date(year, month, day);
+      const today = new Date();
+
+      if (birthDate > today) {
+        result.textContent = 'Date of birth cannot be in the future.';
+        return;
+      }
+
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+
+      result.textContent = `You are ${age} years old.`;
+    }
+  </script>
+</body>
+</html>
